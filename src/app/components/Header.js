@@ -10,11 +10,36 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'row',
     },
+    appBar: {
+        boxShadow: 'none'
+    },
     menu: {
         dispaly: 'none',
         [theme.breakpoints.up('sm')]: {
             display: 'flex',
             flexGrow: 1
+        }
+    },
+    bar: {
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    navigationBar: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '100%',
+        marginTop: theme.spacing(1),
+        [theme.breakpoints.up('sm')]: {
+            paddingBottom: theme.spacing(1),
+            borderBottom: '1px solid white'
+        }
+    },
+    subNavigationBar: {
+        display: 'none',
+        flexDirection: 'row',
+        width: '100%',
+        [theme.breakpoints.up('sm')]: {
+            display: 'flex',
         }
     },
     title: {
@@ -37,6 +62,16 @@ const useStyles = makeStyles(theme => ({
             marginLeft: '10px',
             marginRight: '10px'
         }
+    },
+    subMenuItem: {
+        margin: theme.spacing(4),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        cursor: 'pointer'
+    },
+    subMenuItemDescription: {
+        marginTop: theme.spacing(4),
     },
     search: {
         flexGrow: 1
@@ -83,37 +118,61 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const menu = ['Anime', 'Manga', 'New Releases'];
+const animeSubMenu = [
+    {icon: 'fas fa-tv', description: 'TV'}, 
+    {icon: 'fas fa-film', description: 'Movie'}, 
+    {icon: 'fas fa-users', description: 'New Releases'}, 
+    {icon: 'far fa-clock', description: 'Upcoming'}
+];
 const Header = () => {
-
     // debugTheme();
     const classes = useStyles();
     return(
         <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar color="primary">
-                    <div className={classes.menu}>
-                        <Typography className={classes.title} variant="h4" noWrap>
-                            AnimeYouKnow
-                        </Typography>
-                        {menu.map((menu, index) => {
-                            return(
-                            <Button key={index} className={classes.menuItem} variant="h6" noWrap>
-                                {menu}
-                            </Button>);
-                        })}
-                    </div>
-                    <div className={classes.search}>
-                        <div className={classes.searchField}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon />
-                            </div>
-                            <InputBase
-                                placeholder="Search..."
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput
-                                }} />
+            <AppBar position="static" className={classes.appBar}>
+                <Toolbar color="primary" className={classes.bar}>
+                    <div className={classes.navigationBar}>
+                        <div className={classes.menu}>
+                            <Typography className={classes.title} variant="h4" noWrap>
+                                AnimeYouKnow
+                            </Typography>
+                            {menu.map((menu, index) => {
+                                return(
+                                <Button key={index} className={classes.menuItem} variant="h6" noWrap>
+                                    {menu}
+                                </Button>);
+                            })}
                         </div>
+                        <div className={classes.search}>
+                            <div className={classes.searchField}>
+                                <div className={classes.searchIcon}>
+                                    <SearchIcon />
+                                </div>
+                                <InputBase
+                                    placeholder="Search..."
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput
+                                    }} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className={classes.subNavigationBar}>
+                        {animeSubMenu.map((value, index) => {
+                            return(
+                                <div className={classes.subMenuItem}>
+                                    <i className={value.icon}></i>
+                                    <Typography 
+                                        key={index}
+                                        className={classes.subMenuItemDescription}
+                                        variant="p" 
+                                        noWrap>
+                                        {value.description}
+                                    </Typography>
+                                </div>  
+                            );
+                        })
+                        }      
                     </div>
                 </Toolbar>
             </AppBar>
