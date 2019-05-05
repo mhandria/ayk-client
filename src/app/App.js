@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import Header from './components/Header';
-import { PinkBlue } from '../theme';
+import { PinkBlue, PurpleYellow } from '../theme';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import AnimeTVList from './pages/AnimeTVList';
@@ -10,7 +10,7 @@ import MangaJpList from './pages/MangaJPList';
 
 function App() {
   return (
-    <ThemeProvider theme={PinkBlue}>
+    <ThemeProvider theme={PurpleYellow}>
       <BrowserRouter basename="/">
         <Header />
         <Switch>
