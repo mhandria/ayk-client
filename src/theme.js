@@ -3,7 +3,6 @@ import { createMuiTheme } from '@material-ui/core';
 
 export const PurpleYellow = createMuiTheme({
     palette: {
-      type: 'dark',
       primary: { main: '#3C1A5B' },
       secondary: { main: '#FFF748', contrastText: '#666600' }
     },
@@ -17,3 +16,18 @@ export const PurpleYellow = createMuiTheme({
       }
     }
 });
+
+export const PinkBlue = createMuiTheme({
+    palette: {
+        primary: { main: '#2F3C7E'},
+    },
+    typography: {
+        fontFamily: ['"Asap"', 'san-serif']
+    },
+    props: {
+        logo: {
+            background: '#2F3C7E',
+            color: '#FBEAEB'
+        }
+    }
+})
