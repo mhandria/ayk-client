@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { makeStyles, fade, withStyles, createStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, ButtonBase } from '@material-ui/core/';
 import Navigation from './Navigation';
+import KitsuService from '../services/KitsuService';
 
 const debugTheme = makeStyles(theme => console.log(theme));
 
@@ -24,7 +25,11 @@ const useStyles = (theme) => createStyles({
         }
     },
     subMenuItem: {
-        margin: theme.spacing(4),
+        margin: theme.spacing(2),
+        padding: theme.spacing(1),
+        borderRadius: theme.spacing(2),
+        width: '100px',
+        height: 'auto',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
