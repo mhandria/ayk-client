@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import KitsuService from '../services/KitsuService';
-import { Typography } from '@material-ui/core';
+import { createStyles, withStyles } from '@material-ui/core/styles';
+import Poster from '../components/Poster';
 
+const useStyles = (theme) => createStyles({
+    root: {
+        display: 'flex',
+        padding: '10px',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+});
 class AnimeTVList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            animeList: [{id: 0, attributes: {canonicalTitle: 'Test'}}],
+            animeList: [],
             offset: 0,
             page: 20
         };
@@ -19,7 +30,6 @@ class AnimeTVList extends Component {
     fetchMoreData() {
         const page = this.state.page;
         const offset = this.state.offset;
-        console.log(this.state);
         KitsuService.Kitsu.getByPage(page, offset)
             .subscribe(res => {
                 const animeList = [];
@@ -29,7 +39,6 @@ class AnimeTVList extends Component {
                         attributes: value.attributes
                     });
                 });
-                console.log(animeList);
                 this.setState({
                     animeList: this.state.animeList.concat(animeList),
                     page: page,
@@ -40,16 +49,18 @@ class AnimeTVList extends Component {
 
     render() {
         const animeList = this.state.animeList
-        console.log(animeList);
+        const classes = this.props.classes;
         return(
-            <div onScroll={this.fetchMoreData()}>
-                AnimeList
+            <div className={classes.root} onScroll={this.fetchMoreData()}>
                 {animeList.map((value, index) => {
-                    console.log('values: ', value);
+                    const poster = {
+                        posterImg: value.attributes.posterImage.large,
+                        posterTitle: value.attributes.canonicalTitle
+                    };
                     return(
-                        <Typography key={index} variant="h4" noWrap>
-                            {value.attributes.canonicalTitle}, {value.id}
-                        </Typography>
+                        <Poster 
+                            key={index} 
+                            {...poster} />
                     );
                 })}
             </div>
@@ -57,4 +68,4 @@ class AnimeTVList extends Component {
     }
 }
 
-export default AnimeTVList;
+export default withStyles(useStyles)(AnimeTVList);
