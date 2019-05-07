@@ -7,7 +7,7 @@ export const PurpleYellow = createMuiTheme({
       secondary: { main: '#FFF748', contrastText: '#666600' }
     },
     typography: {
-      fontFamily: ['"Asap"', 'san-serif']
+      fontFamily: ['"Rubik"', 'san-serif']
     },
     props: {
       logo: {
@@ -22,7 +22,7 @@ export const PinkBlue = createMuiTheme({
         primary: { main: '#2F3C7E'},
     },
     typography: {
-        fontFamily: ['"Asap"', 'san-serif']
+        fontFamily: ['"Rubik"', 'san-serif']
     },
     props: {
         logo: {

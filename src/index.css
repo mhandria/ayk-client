@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Righteous');
-@import url('https://fonts.googleapis.com/css?family=Asap');
+@import url('https://fonts.googleapis.com/css?family=Rubik');
 @import url('https://use.fontawesome.com/releases/v5.8.1/css/all.css');
 
 body {
@@ -8,7 +8,7 @@ body {
   position: absolute;
   width: 100vw;
   height: 100vh;
-  font-family: 'Asap', sans-serif;
+  font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

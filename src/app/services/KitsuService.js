@@ -1,7 +1,4 @@
-import React from 'react';
-
 import axios from 'axios';
-import { from } from 'rxjs';
 
 const URL = 'https://kitsu.io/api/edge';
 
@@ -18,7 +15,7 @@ const KitsuURL = {
 
 const Kitsu = {
     getByPage: (page, offset) => 
-        from(axios.get(KitsuURL.getByPageURL(page, offset),  {headers: headers}))
+        axios.get(KitsuURL.getByPageURL(page, offset),  {headers: headers})
 };
 
 export default { Kitsu, KitsuURL }

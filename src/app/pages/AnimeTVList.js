@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import KitsuService from '../services/KitsuService';
+import { LinearProgress } from '@material-ui/core';
 import { createStyles, withStyles } from '@material-ui/core/styles';
 import Poster from '../components/Poster';
+import InfiniteScroll from 'react-infinite-scroller';
+
 
 const useStyles = (theme) => createStyles({
     root: {
@@ -11,6 +14,9 @@ const useStyles = (theme) => createStyles({
         flexWrap: 'wrap',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    bar: {
+        width: '100vw'
     }
 });
 class AnimeTVList extends Component {
@@ -19,7 +25,8 @@ class AnimeTVList extends Component {
         this.state = {
             animeList: [],
             offset: 0,
-            page: 20
+            page: 20,
+            hasMore: false
         };
     }
 
@@ -27,43 +34,52 @@ class AnimeTVList extends Component {
         this.fetchMoreData();
     }
 
-    fetchMoreData() {
+    async fetchMoreData() {
         const page = this.state.page;
         const offset = this.state.offset;
-        KitsuService.Kitsu.getByPage(page, offset)
-            .subscribe(res => {
-                const animeList = [];
-                res.data.data.map((value, index) => {
-                    animeList.push({
-                        id: index+this.state.offset,
-                        attributes: value.attributes
-                    });
-                });
-                this.setState({
-                    animeList: this.state.animeList.concat(animeList),
-                    page: page,
-                    offset: offset+page
-                });
-            });
+        let response = await KitsuService.Kitsu.getByPage(page, offset);
+        let testArray = response.data.data.map((value, index) => ({
+            id: index + this.state.offset,
+            attributes: value.attributes
+        })).map(tValue => ({
+            id: tValue.id,
+            ...tValue.attributes
+        }));
+        this.setState({
+            animeList: this.state.animeList.concat(testArray),
+            page: page,
+            offset: offset+page,
+            hasMore: true
+        });
     }
 
     render() {
         const animeList = this.state.animeList
         const classes = this.props.classes;
+        const loader = <LinearProgress className={classes.bar}/>;
+        const posters = [];
+        animeList.map((poster, index) => {
+            console.log(poster);
+            posters.push(
+                <Poster
+                    key={index}
+                    id={index}
+                    posterTitle={poster.canonicalTitle} 
+                    posterImg={poster.posterImage.large}/>
+            );
+        });
         return(
-            <div className={classes.root} onScroll={this.fetchMoreData()}>
-                {animeList.map((value, index) => {
-                    const poster = {
-                        posterImg: value.attributes.posterImage.large,
-                        posterTitle: value.attributes.canonicalTitle
-                    };
-                    return(
-                        <Poster 
-                            key={index} 
-                            {...poster} />
-                    );
-                })}
-            </div>
+            <React.Fragment>
+                <InfiniteScroll
+                    className={classes.root} 
+                    pageStart={0}
+                    loadMore={this.fetchMoreData.bind(this)}
+                    hasMore={this.state.hasMore}
+                    loader={loader}>
+                    {posters}    
+                </InfiniteScroll>
+            </React.Fragment>
+            
         );
     }
 }

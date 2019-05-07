@@ -14,7 +14,7 @@ const navStyles = makeStyles(theme => ({
     },
     bar: {
         display: 'flex',
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
     navigationBar: {
         display: 'flex',
@@ -32,7 +32,7 @@ const navStyles = makeStyles(theme => ({
         textDecoration: 'none',
         [theme.breakpoints.up('sm')]: {
             display: 'flex',
-            color: theme.props.logo.color,
+            color: 'white',
             fontFamily: "'Righteous', cursive",
             marginRight: theme.spacing(7)
         },
@@ -101,27 +101,16 @@ const Navigation = () => {
     const classes = navStyles();
     const theme = useTheme();
     return(
-        <Toolbar color="primary" className={classes.bar}>
+        <Toolbar className={classes.bar}>
             <div className={classes.navigationBar}>
                 <div className={classes.menu}>
-                    <Typography variant="h4" noWrap>
+                    <Typography variant="h5" noWrap>
                         <NavLink 
                             className={classes.title} 
                             to="/anime"> 
                             AnimeYouKnow 
                         </NavLink>
                     </Typography>
-                    {routes.map((route, index) => {
-                        return(
-                        <Button key={index} >
-                            <NavLink 
-                                to={route}
-                                activeStyle={{color: theme.props.logo.color}}
-                                className={classes.menuItem}>
-                                {route.slice(1)}
-                            </NavLink>
-                        </Button>);
-                    })}
                 </div>
                 <div className={classes.search}>
                     <div className={classes.searchField}>

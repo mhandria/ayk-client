@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, ButtonBase } from '@material-ui/core';
+import { ButtonBase } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
 
@@ -9,16 +9,28 @@ const posterStyle = makeStyles(theme => ({
         height: 'auto',
         display: 'flex',
         flexDirection: 'column',
-        width: '195px',
-        height: '300px',
-        margin: theme.spacing(2)
+        margin: theme.spacing(3),
+        padding: theme.spacing(1)
     },
     posterImg: {
-        height: '277px',
-        borderRadius: theme.spacing(2)
+        height: '205.97px',
+        borderRadius: '5px',
+        boxShadow: '0 5px 9px 0 rgba(0,0,0,0.2)',
+        transition: '0.3s',
+        '&:hover': {
+            boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)'
+        },
     },
     posterTitle: {
-        display: 'flex',
+        display: 'block',
+        textOverflow: 'ellipsis',
+        width: '146px',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        textAlign: 'left',
+        fontFamily: theme.typography.fontFamily,
+        fontWeight: 'bold'
+
     }
 }))
 
@@ -28,7 +40,7 @@ const Poster = (props) => {
         <ButtonBase className={classes.root}>
             <img src={props.posterImg} className={classes.posterImg}/>
             <p className={classes.posterTitle}>
-                {props.posterTitle}
+                {props.posterTitle}, {props.id}
             </p>
         </ButtonBase>
     )

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { makeStyles, fade, withStyles, createStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, ButtonBase } from '@material-ui/core/';
 import Navigation from './Navigation';
-import KitsuService from '../services/KitsuService';
+import { NavLink } from 'react-router-dom';
 
 const debugTheme = makeStyles(theme => console.log(theme));
 
@@ -14,7 +14,10 @@ const useStyles = (theme) => createStyles({
         width: '100%'
     },
     appBar: {
-        boxShadow: 'none'
+        boxShadow: 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundImage: `linear-gradient(to top, rgb(97, 67, 133), rgb(81, 99, 149))`,
     },
     subNavigationBar: {
         display: 'none',
@@ -25,6 +28,11 @@ const useStyles = (theme) => createStyles({
         }
     },
     subMenuItem: {
+        textDecoration: 'none',
+        color: 'white',
+        marginBottom: '5px'
+    },
+    subMenuItemButton: {
         margin: theme.spacing(2),
         padding: theme.spacing(1),
         borderRadius: theme.spacing(2),
@@ -35,17 +43,21 @@ const useStyles = (theme) => createStyles({
         alignItems: 'center',
         cursor: 'pointer'
     },
+    icon: {
+        fontSize: '20px'
+    },
     subMenuItemDescription: {
         marginTop: theme.spacing(4),
+        fontSize: '8px'
     }
 });
 
 
 const animeSubMenu = [
-    {icon: 'fas fa-tv', description: 'TV'}, 
-    {icon: 'fas fa-film', description: 'Movie'}, 
-    {icon: 'fas fa-users', description: 'New Releases'}, 
-    {icon: 'far fa-clock', description: 'Upcoming'}
+    {icon: 'fas fa-tv', description: 'TV', route: '/anime'}, 
+    {icon: 'fas fa-film', description: 'Movie', route: '/movie'}, 
+    {icon: 'fas fa-users', description: 'New Releases', route: '/new-release'}, 
+    {icon: 'far fa-clock', description: 'Upcoming', route: '/upcoming'}
 ];
 
 class Header extends Component { 
@@ -64,15 +76,20 @@ class Header extends Component {
                     <Toolbar className={classes.subNavigationBar}>
                         {animeSubMenu.map((value, index) => {
                                 return(
-                                    <ButtonBase key={index} className={classes.subMenuItem}>
-                                        <i className={value.icon}></i>
-                                        <Typography 
-                                            key={index}
-                                            className={classes.subMenuItemDescription}
-                                            noWrap>
-                                            {value.description}
-                                        </Typography>
-                                    </ButtonBase>  
+                                    <NavLink 
+                                        to={value.route}
+                                        activeStyle={{borderBottom: '5px solid #90EE90', marginBottom: '0px'}}
+                                        className={classes.subMenuItem}>
+                                        <ButtonBase key={index} className={classes.subMenuItemButton}>
+                                            <i className={`${value.icon} ${classes.icon}`}></i>
+                                            <Typography 
+                                                key={index}
+                                                className={classes.subMenuItemDescription}
+                                                noWrap>
+                                                {value.description}
+                                            </Typography>
+                                        </ButtonBase>  
+                                    </NavLink>
                                 );
                             })
                         }      
