@@ -1,16 +1,30 @@
-import React from 'react';
-import { ButtonBase } from '@material-ui/core';
-import { makeStyles } from '@material-ui/styles';
+import React, { Component } from 'react';
+import { ButtonBase, Fade } from '@material-ui/core';
+import { createStyles, withStyles } from '@material-ui/styles';
 
 
-const posterStyle = makeStyles(theme => ({
+const useStyles = theme => createStyles({
     root: {
+        position: 'relative',
         width: 'fit-content',
         height: 'auto',
         display: 'flex',
         flexDirection: 'column',
         margin: theme.spacing(3),
-        padding: theme.spacing(1)
+        padding: theme.spacing(1),
+        flex: '1 1 15%'
+    },
+    posterPlaceholder: {
+        width: '146px',
+        height: '205.97px',
+        position: 'absolute',
+        top: theme.spacing(1),
+        borderRadius: '5px',
+        background: 'linear-gradient(to right, rgba(87,81,87,1) 0%, rgba(112,112,112,1) 22%, rgba(163,163,163,1) 59%, rgba(204,204,204,1) 100%)',
+        animation: 'Gradient 5s ease infinite',
+        '@keyframes Gradient': {
+
+        }
     },
     posterImg: {
         height: '205.97px',
@@ -32,18 +46,46 @@ const posterStyle = makeStyles(theme => ({
         fontWeight: 'bold'
 
     }
-}))
+});
 
-const Poster = (props) => {
-    const classes = posterStyle();
-    return(
-        <ButtonBase className={classes.root}>
-            <img src={props.posterImg} className={classes.posterImg}/>
-            <p className={classes.posterTitle}>
-                {props.posterTitle}, {props.id}
-            </p>
-        </ButtonBase>
-    )
+class Poster extends Component {
+    _mounted = false;
+    constructor(props) {
+        super(props);
+        this.state = {
+            ready: false
+        }
+    }
+
+    componentWillMount() {
+        this._mounted = true;
+        const buffer = new Image();
+        buffer.onload = () => this._mounted && this.setState({ready: true});
+        buffer.src = this.props.posterImg;
+    }
+
+    componentWillUnmount() {
+        this._mounted = false;
+    }
+
+    render() {
+        const classes = this.props.classes;
+        const { ready } = this.state;
+        const { posterImg, posterTitle } = this.props;
+        return(
+            <ButtonBase className={classes.root}>
+                {(ready) ? (
+                    <Fade className={classes.posterPlaceholder}>
+                        <img />
+                    </Fade>) : null}
+                <img src={posterImg} className={classes.posterImg}/>
+                <p className={classes.posterTitle}>
+                    {posterTitle}
+                </p>
+            </ButtonBase>
+        );
+    }
+        
 }
 
-export default Poster;
+export default withStyles(useStyles)(Poster);
