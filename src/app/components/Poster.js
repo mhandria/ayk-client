@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { ButtonBase, Fade } from '@material-ui/core';
+import { ButtonBase  } from '@material-ui/core';
 import { createStyles, withStyles } from '@material-ui/styles';
 
 
-const useStyles = theme => createStyles({
+const useStyles = theme => ({
     root: {
         position: 'relative',
         width: 'fit-content',
@@ -20,11 +20,7 @@ const useStyles = theme => createStyles({
         position: 'absolute',
         top: theme.spacing(1),
         borderRadius: '5px',
-        background: 'linear-gradient(to right, rgba(87,81,87,1) 0%, rgba(112,112,112,1) 22%, rgba(163,163,163,1) 59%, rgba(204,204,204,1) 100%)',
-        animation: 'Gradient 5s ease infinite',
-        '@keyframes Gradient': {
-
-        }
+        zIndex: 10
     },
     posterImg: {
         height: '205.97px',
@@ -44,7 +40,28 @@ const useStyles = theme => createStyles({
         textAlign: 'left',
         fontFamily: theme.typography.fontFamily,
         fontWeight: 'bold'
-
+    },
+    '@-webkit-keyframes gradient': {
+        '0%': {
+            backgroundPosition: '0% 50%'
+        },
+        '50%': {
+            backgroundPosition: '100% 50%'
+        },
+        '100%': {
+            backgroundPosition: '0% 50%'
+        }
+    },
+    '@keyframes gradient': {
+        '0%': {
+            backgroundPosition: '0% 50%'
+        },
+        '50%': {
+            backgroundPosition: '100% 50%'
+        },
+        '100%': {
+            backgroundPosition: '0% 50%'
+        }
     }
 });
 
@@ -74,10 +91,8 @@ class Poster extends Component {
         const { posterImg, posterTitle } = this.props;
         return(
             <ButtonBase className={classes.root}>
-                {(ready) ? (
-                    <Fade className={classes.posterPlaceholder}>
-                        <img />
-                    </Fade>) : null}
+                {(!ready) ? (
+                        <img className={`${classes.posterPlaceholder} animate-loading`} />) : null}
                 <img src={posterImg} className={classes.posterImg}/>
                 <p className={classes.posterTitle}>
                     {posterTitle}

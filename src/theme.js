@@ -14,8 +14,16 @@ export const PurpleYellow = createMuiTheme({
         background: '#3C1A5B',
         color: '#FFF748'
       }
+    },
+    overrides: {
+      MuiPickersToolbar: {
+        toolbar: {
+          height: '15px'
+        },
+      },
     }
 });
+
 
 export const PinkBlue = createMuiTheme({
     palette: {
