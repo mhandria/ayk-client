@@ -8,7 +8,7 @@ import { DatePicker } from '@material-ui/pickers';
 const boostrapStyle = withStyles(theme => ({
     root: {
         'label + &': {
-        marginTop: theme.spacing.unit * 3,
+            marginTop: theme.spacing(3),
         },
     },
     input: {
@@ -49,7 +49,6 @@ const useStyles = theme => ({
             paddingLeft: theme.spacing(4),
             paddingRight: theme.spacing(4),
             marginTop: theme.spacing(1),
-            marginBottom: theme.spacing(1)
         }
     },
     formControl: {
@@ -61,14 +60,14 @@ const useStyles = theme => ({
         height: '40px'
     },
     selectEmpty: {
-        marginTop: theme.spacing.unit * 2,
+        marginTop: theme.spacing(2),
     },
     datepicker: {
-        margin: theme.spacing.unit * 2,
+        margin: theme.spacing(2),
     },
     datepickerRoot: {
         'label + &': {
-            marginTop: theme.spacing.unit * 3,
+            marginTop: theme.spacing(3),
         },
     },
     datepickerInput: {
@@ -80,6 +79,7 @@ const useStyles = theme => ({
         width: 'auto',
         height: '15px',
         padding: '10px 26px 10px 12px',
+        minWidth: '260px',
         transition: theme.transitions.create(['border-color', 'box-shadow']),
         // Use the system font instead of the default Roboto font.
         fontFamily: theme.typography.fontFamily,
@@ -96,11 +96,12 @@ class FilterBar extends Component {
         super(props);
         this.state = {
             genre: 'All',
-            release: ''
+            release: new Date()
         };
     }
 
     handleChange(event) {
+        console.log(event);
         this.setState({
             [event.target.name]: event.target.value 
         });
@@ -108,6 +109,7 @@ class FilterBar extends Component {
 
     render() {
         const classes = this.props.classes;
+        const release = this.state.release;
         return(
             <div className={classes.root}>
                 <FormControl variant="outlined" className={classes.formControl}>
@@ -133,7 +135,10 @@ class FilterBar extends Component {
                         inputVariant="outlined"
                         views={["year", "month"]}
                         variant="inline"
-                        format="yyyy"/>
+                        name="release"
+                        onChange={(date) => this.setState({release: date})}
+                        value={release}
+                        format="MMMM YYYY"/>
                 </FormControl>
                     
             </div>

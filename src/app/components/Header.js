@@ -4,8 +4,6 @@ import { AppBar, Toolbar, Typography, ButtonBase } from '@material-ui/core/';
 import Navigation from './Navigation';
 import { NavLink } from 'react-router-dom';
 
-const debugTheme = makeStyles(theme => console.log(theme));
-
 const useStyles = (theme) => createStyles({
     root: {
         flexGrow: 1,
@@ -77,6 +75,7 @@ class Header extends Component {
                         {animeSubMenu.map((value, index) => {
                                 return(
                                     <NavLink 
+                                        key={`navLink-${index}`}
                                         to={value.route}
                                         activeStyle={{borderBottom: '5px solid #90EE90', marginBottom: '0px'}}
                                         className={classes.subMenuItem}>

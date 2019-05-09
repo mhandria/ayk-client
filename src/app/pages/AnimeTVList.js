@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import KitsuService from '../services/KitsuService';
-import { LinearProgress } from '@material-ui/core';
+import { CircularProgress, LinearProgress } from '@material-ui/core';
 import { createStyles, withStyles } from '@material-ui/core/styles';
 import Poster from '../components/Poster';
 import InfiniteScroll from 'react-infinite-scroller';
@@ -15,10 +15,14 @@ const useStyles = (theme) => createStyles({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    bar: {
-        width: '100vw'
+    progress: {
+        display: 'flex',
+        width: '100vw',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
+
 class AnimeTVList extends Component {
     constructor(props) {
         super(props);
@@ -56,13 +60,16 @@ class AnimeTVList extends Component {
     render() {
         const animeList = this.state.animeList
         const classes = this.props.classes;
-        const loader = <LinearProgress className={classes.bar}/>;
+        const loader = (animeList.length !== 0) ? (
+            <div className={classes.progress}>
+                <CircularProgress key="loader"/>
+            </div>
+        ) : <LinearProgress className={classes.progress}/>;
         const posters = [];
         animeList.map((poster, index) => {
-            console.log(poster);
             posters.push(
                 <Poster
-                    key={index}
+                    key={`poster-${index}`}
                     id={index}
                     posterTitle={poster.canonicalTitle} 
                     posterImg={poster.posterImage.large}/>
@@ -70,16 +77,18 @@ class AnimeTVList extends Component {
         });
         return(
             <React.Fragment>
+                {animeList.length === 0 &&
+                    loader
+                }
                 <InfiniteScroll
                     className={classes.root} 
                     pageStart={0}
                     loadMore={this.fetchMoreData.bind(this)}
                     hasMore={this.state.hasMore}
                     loader={loader}>
-                    {posters}    
+                        {posters}    
                 </InfiniteScroll>
             </React.Fragment>
-            
         );
     }
 }
