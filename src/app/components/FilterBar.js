@@ -1,10 +1,11 @@
 import React, { Component }  from 'react';
-import ReactDOM from 'react-dom';
 import { FormControl, Typography, Select, MenuItem, InputBase } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
-import { KeyboardDatePicker} from 'material-ui-pickers';
+import { DatePicker } from '@material-ui/pickers';
 
-const BootstrapInput = withStyles(theme => ({
+
+
+const boostrapStyle = withStyles(theme => ({
     root: {
         'label + &': {
         marginTop: theme.spacing.unit * 3,
@@ -28,7 +29,10 @@ const BootstrapInput = withStyles(theme => ({
             boxShadow: '0 0 0 0.2rem #b19cd9',
         },
     },
-}))(InputBase);
+}))
+
+
+const BootstrapInput = (boostrapStyle)(InputBase);
 
 
 const useStyles = theme => ({
@@ -39,6 +43,7 @@ const useStyles = theme => ({
         flexDirection: 'column',
         borderBottom: '1px solid lightgray',
         paddingBottom: theme.spacing(2),
+        alignItems: 'center',
         [theme.breakpoints.up('sm')]: {
             flexDirection: 'row',
             paddingLeft: theme.spacing(4),
@@ -48,7 +53,8 @@ const useStyles = theme => ({
         }
     },
     formControl: {
-        minWidth: 120
+        minWidth: 120,
+        margin: theme.spacing(1)
     },
     select: {
         width: '300px',
@@ -59,15 +65,30 @@ const useStyles = theme => ({
     },
     datepicker: {
         margin: theme.spacing.unit * 2,
-        height: '15px'
+    },
+    datepickerRoot: {
+        'label + &': {
+            marginTop: theme.spacing.unit * 3,
+        },
     },
     datepickerInput: {
-        padding: 0,
-        '.MuiOutlinedInput-input': {
-            padding: 0
-        }
-    }
-    
+        borderRadius: 4,
+        position: 'relative',
+        backgroundColor: 'white',
+        border: `1px solid ${theme.palette.primary.main}`,
+        fontSize: 12,
+        width: 'auto',
+        height: '15px',
+        padding: '10px 26px 10px 12px',
+        transition: theme.transitions.create(['border-color', 'box-shadow']),
+        // Use the system font instead of the default Roboto font.
+        fontFamily: theme.typography.fontFamily,
+        '&:focus': {
+            borderRadius: 4,
+            borderColor: theme.palette.primary.main,
+            boxShadow: '0 0 0 0.2rem #b19cd9',
+        },
+    },
 });
 
 class FilterBar extends Component {
@@ -102,19 +123,19 @@ class FilterBar extends Component {
                         <MenuItem value="Action">Action</MenuItem>
                     </Select>
                 </FormControl>
-                <KeyboardDatePicker
-                    classes={{
-                        root: classes.datepicker,
-                        div: {
-                            fieldset: {
-                                input: classes.datepickerInput
-                            }
-                        }
-                    }}
-                    views={["year"]}
-                    variant="inline"
-                    inputVariant="outlined"
-                    format="yyyy"/>
+                <FormControl variant="outlined" className={classes.formControl}>
+                    <Typography varient="h6" noWrap>Release</Typography>
+                    <DatePicker
+                        InputProps={{classes: {
+                            root: classes.datepickerRoot,
+                            input: classes.datepickerInput
+                        }}}
+                        inputVariant="outlined"
+                        views={["year", "month"]}
+                        variant="inline"
+                        format="yyyy"/>
+                </FormControl>
+                    
             </div>
         );
     }

@@ -3,7 +3,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import Header from './components/Header';
 import { PinkBlue, PurpleYellow } from '../theme';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { MuiPickersUtilsProvider } from 'material-ui-pickers';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import AnimeTVList from './pages/AnimeTVList';
 import MangaJpList from './pages/MangaJPList';
