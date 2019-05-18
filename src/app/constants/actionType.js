@@ -1,0 +1,2 @@
+export const POSTER_IMG_LOADING = 'POSTER_IMG_LOADING';
+export const LOAD_MORE_ANIME = 'LOAD_MORE_ANIME';

@@ -6,30 +6,32 @@ import { PinkBlue, PurpleYellow } from '../theme';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
-// import AnimeTVList from './pages/AnimeTVList';
-import MangaJpList from './pages/MangaJPList';
+import rootReducer from './reducers';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import FilterBar from './components/FilterBar';
 import MomentUtils from '@date-io/moment';
 
-
-const AnimeTVListLazy = React.lazy(() => import('./pages/AnimeTVList'));
+const store = createStore(rootReducer);
+const AnimeTVListLazy = React.lazy(() => import('./components/AnimeTVList'));
 function App() {
   return (
-    <ThemeProvider theme={PurpleYellow}>
-      <BrowserRouter basename="/">
-        <Header />
-          <MuiPickersUtilsProvider utils={MomentUtils}>
-            <FilterBar />
-          </MuiPickersUtilsProvider>
-        <Suspense fallback={<LinearProgress style={{width: '100vw'}}/>}>
-          <Switch>
-            <Redirect exact from="/" to="/anime" />
-            <Route path="/anime" component={AnimeTVListLazy} />
-            <Route path="/manga" component={MangaJpList} />
-          </Switch>
-        </Suspense>
-      </BrowserRouter>  
-    </ThemeProvider>
+    <Provider store={store} >
+      <ThemeProvider theme={PurpleYellow}>
+        <BrowserRouter basename="/">
+          <Header />
+            <MuiPickersUtilsProvider utils={MomentUtils}>
+              <FilterBar />
+            </MuiPickersUtilsProvider>
+          <Suspense fallback={<LinearProgress style={{width: '100vw'}}/>}>
+            <Switch>
+              <Redirect exact from="/" to="/anime" />
+              <Route path="/anime" component={AnimeTVListLazy} />
+            </Switch>
+          </Suspense>
+        </BrowserRouter>  
+      </ThemeProvider>
+    </Provider>
   );
 }
 
