@@ -8,13 +8,10 @@ import { LOAD_MORE_ANIME } from '../constants/actionType';
 import { connect } from 'react-redux';
 
 const mapDispatchToProps = (dispatch) => ({
-    loadMore: (page, offset) => {
-        AYKService.AnimeService.getByPage(page, offset)
-            .then(res => dispatch({
-                type: LOAD_MORE_ANIME,
-                data: res
-            }));
-    },
+    loadMore: async (page, offset) => dispatch({
+        type: LOAD_MORE_ANIME,
+        data: await AYKService.AnimeService.getByPage(page, offset)
+    }),
 });
 
 const mapStateToProps = state => ({
@@ -39,7 +36,7 @@ const useStyles = () => createStyles({
     }
 });
 
-class AnimeTVList extends Component {
+class MediaList extends Component {
     constructor(props) {
         super(props);
     }
@@ -53,25 +50,6 @@ class AnimeTVList extends Component {
         this.props
         .loadMore(this.props.page, this.props.offset);
     }
-
-    // async fetchMoreData() {
-    //     const page = this.state.page;
-    //     const offset = this.state.offset;
-    //     let response = await AYKService.AnimeService.getByPage(page, offset);
-    //     let testArray = response.data.map((value, index) => ({
-    //         id: index + this.state.offset,
-    //         attributes: value.attribute
-    //     })).map(tValue => ({
-    //         id: tValue.id,
-    //         ...tValue.attributes
-    //     }));
-    //     this.setState({
-    //         animeList: this.state.animeList.concat(testArray),
-    //         page: page,
-    //         offset: offset+page,
-    //         hasMore: true
-    //     });
-    // }
 
     render() {
         const animeList = this.props.animeList
@@ -109,4 +87,7 @@ class AnimeTVList extends Component {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps,)(withStyles(useStyles)(AnimeTVList));
+export default connect(
+    mapStateToProps, 
+    mapDispatchToProps,
+)(withStyles(useStyles)(MediaList));

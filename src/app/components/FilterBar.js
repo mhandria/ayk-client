@@ -39,7 +39,6 @@ const useStyles = theme => ({
     root: {
         display: 'flex',
         flexGrow: 1,
-        width: '100%',
         flexDirection: 'column',
         borderBottom: '1px solid lightgray',
         paddingBottom: theme.spacing(2),

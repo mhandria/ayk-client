@@ -13,7 +13,7 @@ import FilterBar from './components/FilterBar';
 import MomentUtils from '@date-io/moment';
 
 const store = createStore(rootReducer);
-const AnimeTVListLazy = React.lazy(() => import('./components/AnimeTVList'));
+const MediaListLazy= React.lazy(() => import('./components/MediaList'));
 function App() {
   return (
     <Provider store={store} >
@@ -25,8 +25,8 @@ function App() {
             </MuiPickersUtilsProvider>
           <Suspense fallback={<LinearProgress style={{width: '100vw'}}/>}>
             <Switch>
-              <Redirect exact from="/" to="/anime" />
-              <Route path="/anime" component={AnimeTVListLazy} />
+              <Redirect exact from="/" to="/list-view" />
+              <Route path="/list-view" component={MediaListLazy} />
             </Switch>
           </Suspense>
         </BrowserRouter>  

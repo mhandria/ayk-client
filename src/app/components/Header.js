@@ -20,7 +20,6 @@ const useStyles = (theme) => createStyles({
     subNavigationBar: {
         display: 'none',
         flexDirection: 'row',
-        width: '100%',
         [theme.breakpoints.up('sm')]: {
             display: 'flex',
         }
@@ -63,6 +62,8 @@ class Header extends Component {
         super(props);
     }
 
+
+    //TODO: make dispatch for bottom NavLink instead of NavLink route. 
     render() {
         // debugTheme();
         const classes = this.props.classes;
