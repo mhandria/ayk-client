@@ -1,5 +1,5 @@
 import React from 'react';
-import {Toolbar, Typography, Button, InputBase } from '@material-ui/core';
+import {Toolbar, Typography, InputBase } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles, fade, useTheme } from '@material-ui/core/styles';
 import { NavLink } from 'react-router-dom';

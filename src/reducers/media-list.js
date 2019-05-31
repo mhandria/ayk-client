@@ -1,6 +1,6 @@
 import {
-    LOAD_MORE_ANIME
-} from '../constants/actionType';
+    LOAD_MORE_DATA
+} from '../constants/action-type';
 
 const extractTransformAnimeDTO = (state, action) => {
     const tAnimeDTO = action.data.data.map((value, index) => ({
@@ -12,9 +12,9 @@ const extractTransformAnimeDTO = (state, action) => {
     }));
     return tAnimeDTO
 }
-const animeReducer = (state = {}, action) => {
+const mediaListReducer = (state = {}, action) => {
     switch (action.type) {
-        case LOAD_MORE_ANIME: {
+        case LOAD_MORE_DATA: {
             state.hasMore = action.data.data.length >= 20;
             state.animeList = state.animeList
                 .concat(extractTransformAnimeDTO(state, action));
@@ -33,4 +33,4 @@ const animeReducer = (state = {}, action) => {
     }
 }
 
-export default animeReducer;
+export default mediaListReducer;

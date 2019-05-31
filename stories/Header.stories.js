@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Header from '../app/components/Header';
+import Header from '../src/components/Header';
 import { ThemeProvider } from '@material-ui/styles';
-import { PurpleYellow } from '../theme';
+import { PurpleYellow } from '../src/theme';
 
 
 storiesOf('Header', module)
