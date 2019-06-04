@@ -24,6 +24,7 @@ const useStyles = theme => ({
     },
     posterImg: {
         height: '205.97px',
+        maxWidth: '140px',
         borderRadius: '5px',
         boxShadow: '0 5px 9px 0 rgba(0,0,0,0.2)',
         transition: '0.3s',
@@ -88,14 +89,14 @@ class Poster extends Component {
     render() {
         const classes = this.props.classes;
         const { ready } = this.state;
-        const { posterImg, posterTitle } = this.props;
+        const { posterImg, posterTitle, rank } = this.props;
         return(
             <ButtonBase className={classes.root}>
                 {(!ready) ? (
                         <img className={`${classes.posterPlaceholder} animate-loading`} />) : null}
                 <img src={posterImg} className={classes.posterImg}/>
                 <p className={classes.posterTitle}>
-                    {posterTitle}
+                    {rank}. {posterTitle}
                 </p>
             </ButtonBase>
         );
