@@ -7,7 +7,7 @@ import { fetchTopMediaList } from '../middleware/api';
 
 function MediaTopPage(props) {
     const filters = 
-        (props.media === 'manga') ? ['manga', 'novels', 'oneshots', 'doujin', 'manhwa', 'manhua'] :
+        (props.media === 'manga') ? ['manga', 'novels', 'oneshots', 'manhwa', 'manhua'] :
         ['airing', 'upcoming', 'tv', 'movie', 'ova', 'special']
     props.detectMediaTypeChange({
         media: props.media,
@@ -24,7 +24,7 @@ function MediaTopPage(props) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        detectMediaTypeChange: (parameters) => dispatch(fetchTopMediaList(parameters)),
+        detectMediaTypeChange: (parameters) => dispatch(fetchTopMediaList(parameters, 'new', true)),
     }
 }
 

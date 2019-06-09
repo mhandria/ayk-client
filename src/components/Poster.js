@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ButtonBase  } from '@material-ui/core';
-import { createStyles, withStyles } from '@material-ui/styles';
+import { withStyles } from '@material-ui/styles';
+import { Link } from 'react-router-dom';
 
 
 const useStyles = theme => ({
@@ -13,6 +14,13 @@ const useStyles = theme => ({
         margin: theme.spacing(3),
         padding: theme.spacing(1),
         flex: '1 1 15%'
+    },
+    posterContainer: {
+        textDecoration: 'none', 
+        color: 'gray',
+        '&:hover': {
+            color: 'black'
+        }
     },
     posterPlaceholder: {
         width: '146px',
@@ -42,32 +50,12 @@ const useStyles = theme => ({
         fontFamily: theme.typography.fontFamily,
         fontWeight: 'bold'
     },
-    '@-webkit-keyframes gradient': {
-        '0%': {
-            backgroundPosition: '0% 50%'
-        },
-        '50%': {
-            backgroundPosition: '100% 50%'
-        },
-        '100%': {
-            backgroundPosition: '0% 50%'
-        }
-    },
-    '@keyframes gradient': {
-        '0%': {
-            backgroundPosition: '0% 50%'
-        },
-        '50%': {
-            backgroundPosition: '100% 50%'
-        },
-        '100%': {
-            backgroundPosition: '0% 50%'
-        }
-    }
 });
 
 class Poster extends Component {
+    
     _mounted = false;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -91,14 +79,21 @@ class Poster extends Component {
         const { ready } = this.state;
         const { posterImg, posterTitle, rank } = this.props;
         return(
-            <ButtonBase className={classes.root}>
-                {(!ready) ? (
-                        <img className={`${classes.posterPlaceholder} animate-loading`} />) : null}
-                <img src={posterImg} className={classes.posterImg}/>
-                <p className={classes.posterTitle}>
-                    {rank}. {posterTitle}
-                </p>
-            </ButtonBase>
+            <Link 
+                to={`/${this.props.media}/${this.props.filter}/${this.props.id}`} 
+                className={classes.posterContainer}>
+                <ButtonBase className={classes.root}>
+                    {(!ready) ? (
+                            <img className={`${classes.posterPlaceholder} animate-loading`} />) : null}
+                    <img 
+                        src={posterImg} 
+                        className={classes.posterImg}
+                        alt={posterTitle} />
+                    <p className={classes.posterTitle}>
+                        {rank}. {posterTitle}
+                    </p>
+                </ButtonBase>
+            </Link>
         );
     }
         

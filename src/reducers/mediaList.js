@@ -6,6 +6,7 @@ import {
     RECIEVE_MORE_MEDIA,
     UPDATE_FILTER_SELECTED,
     REQUEST_MORE_MEDIA,
+    NO_MORE_MEDIA,
 } from '../constants';
 
 
@@ -22,7 +23,8 @@ function mediaList(state = {
         media: 'anime',
         filter: 'airing'
     },
-    isFetching: false
+    isFetching: false,
+    hasMore: true,
 }, action) {
     switch (action.type) {
         case REQUEST_MEDIA_LIST:
@@ -35,14 +37,16 @@ function mediaList(state = {
             return Object.assign({}, state, {
                 mediaList: action.mediaList,
                 params: action.params,
-                isFetching: false
+                isFetching: false,
+                hasMore: true,
             });
         case UPDATE_FILTER_SELECTED: 
             return Object.assign({}, state, {
                 params: {
                     filter: action.filter,
-                    media: action.media
-                }
+                    media: action.media,
+                },
+                hasMore: true,
             })
         case RECIEVE_MORE_MEDIA:
             return Object.assign({}, state, {
@@ -50,10 +54,15 @@ function mediaList(state = {
                 isFetching: false,
             });
         case REQUEST_MORE_MEDIA: 
-        return Object.assign({}, state, {
-            isFetching: true,
-            params: action.params,
-        });
+            return Object.assign({}, state, {
+                isFetching: true,
+                params: action.params,
+            });
+        case NO_MORE_MEDIA:
+            return Object.assign({}, state, {
+                isFetching: false,
+                hasMore: false,
+            })
         default: 
             return state;
     }

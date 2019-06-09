@@ -19,46 +19,41 @@ const useStyles = () => createStyles({
     },
     progress: {
         display: 'flex',
-        width: '100vw',
+        width: '100%',
         justifyContent: 'center',
         alignItems: 'center'
     }
 });
 
 class MediaList extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     handleLoadMore() {
-        console.log('load more');
         const params = Object.assign({}, this.props.params, {
             page: this.props.params.page+1,
         })
         this.props
-            .loadMoreMedia(params);
+            .loadMoreMedia(params, this.props.hasMore);
     }
 
     render() {
-        console.log(this.props.mediaList);
         const mediaList = this.props.mediaList
         const classes = this.props.classes;
+        const { media, filter } = this.props.params;
         const loader = (mediaList.length !== 0) ? (
             <div key="loader" className={classes.progress}>
                 <CircularProgress />
             </div>
         ) : <LinearProgress key="line-loader" className={classes.progress}/>;
-        const posters = [];
-        mediaList.map((poster, index) => {
-            posters.push(
+       
+        const posters = mediaList.map((poster, index) => (
                 <Poster
                     key={`poster-${index}`}
-                    id={index}
                     posterTitle={poster.title} 
                     posterImg={poster.image_url}
-                    rank={poster.rank}/>
-            );
-        });
+                    rank={poster.rank}
+                    media={media}
+                    filter={filter}
+                    id={poster.mal_id}/>
+        ));
         return(
             <React.Fragment>
                 {mediaList.length === 0 &&
@@ -68,27 +63,29 @@ class MediaList extends Component {
                     className={classes.root} 
                     pageStart={0}
                     loadMore={this.handleLoadMore.bind(this)}
-                    hasMore={!this.props.isFetching}
-                    loader={loader}>
+                    hasMore={!this.props.isFetching}>
                         {posters}    
                 </InfiniteScroll>
+                {(this.props.isFetching && mediaList.length !== 0 ) && 
+                    loader
+                }
             </React.Fragment>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
     return{
         mediaList: state.mediaReducer.mediaList.mediaList,
         isFetching: state.mediaReducer.mediaList.isFetching,
-        params: state.mediaReducer.mediaList.params
+        params: state.mediaReducer.mediaList.params,
+        hasMore: state.mediaReducer.mediaList.hasMore,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return{
-        loadMoreMedia: (params) => dispatch(fetchTopMediaList(params, 'more'))
+        loadMoreMedia: (params, hasMore) => dispatch(fetchTopMediaList(params, 'more', hasMore))
     }
 }
 

@@ -4,6 +4,7 @@ import {
     UPDATE_FILTER_SELECTED,
     REQUEST_MORE_MEDIA,
     RECIEVE_MORE_MEDIA,
+    NO_MORE_MEDIA,
 } from './constants';
 
 export function requestMediaList(parameters) {
@@ -41,5 +42,12 @@ export function receiveMoreMediaList(parameters, topMediaList) {
         type: RECIEVE_MORE_MEDIA,
         params: parameters,
         mediaList: topMediaList
+    }
+}
+
+export function noMoreMediaList(parameters) {
+    return {
+        type: NO_MORE_MEDIA,
+        params: parameters
     }
 }

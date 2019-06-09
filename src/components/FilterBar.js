@@ -100,7 +100,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        changeMediaList: (parameters) => dispatch(fetchTopMediaList(parameters)),
+        changeMediaList: (parameters) => dispatch(fetchTopMediaList(parameters, 'new', true)),
     };
 }
 
