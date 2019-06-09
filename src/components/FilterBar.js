@@ -79,14 +79,14 @@ class FilterBar extends Component {
                             </ButtonBase> 
                     ))}
                 </div>
-                <div className={classes.searchBarContainer}>
+                {/* <div className={classes.searchBarContainer}>
                     <TextField
                         className={classes.searchBar}
                         label="Search..." 
                         variant="outlined" 
                         InputProps={{margin: 'dense'}}
                         InputLabelProps={{margin: 'dense'}}/>
-                </div>
+                </div> */}
             </div>
         )
     }

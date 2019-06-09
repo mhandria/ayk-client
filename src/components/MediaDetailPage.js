@@ -52,7 +52,18 @@ class MediaDetailPage extends Component {
     componentWillMount() {
         fetchMediaDetail(this.props.match.params.id, this.props.match.params.media)
             .then( res => this.setState({
-                ...res.data
+                ...res.data,
+                summaryCardInfo: {
+                    type: res.data.type,
+                    media: res.data.source,
+                    episode: res.data.episodes,
+                    broadcast: res.data.broadcast,
+                    rating: (res.data.rating !== undefined) ? res.data.rating.split('-')[0]: undefined,
+                    premiered: res.data.premiered,
+                    aired: res.data.aired,
+                    published: res.data.published,
+                    chapters: res.data.chapters,
+                }
             }))
             .then(() => {
                 this._mounted = true;
@@ -63,17 +74,30 @@ class MediaDetailPage extends Component {
     }
     
     render() {
-        console.log(this.state);
         const classes = this.props.classes;
         return(
             <div className={classes.root}>
                 <h1 style={{borderBottom: '1px solid lightgray', width: '100%'}}>{this.state.title}</h1>
                 <div className={classes.detailContainer}>
-                    <SummaryCard {...this.state} />
+                    <SummaryCard {...this.state} info={this.state.summaryCardInfo}/>
                     <div className={classes.detailContent}>
                         <StatsCard {...this.state} />
+                        {this.state.trailer_url && 
+                            <React.Fragment>
+                                <h3 style={{margin: 0,  borderBottom: '1px solid lightgray', width: '100%'}}>Trailer</h3>
+                                <iframe 
+                                    title="trailer"
+                                    width="100%"
+                                    height="500"
+                                    style={{padding: '10px', border: 'none'}}
+                                    src={this.state.trailer_url}>
+                                </iframe>
+                            </React.Fragment>
+                        }
                         <h3 style={{margin: 0,  borderBottom: '1px solid lightgray', width: '100%'}}>Synopsis</h3>
                         <p>{this.state.synopsis}</p>
+                        <h3 style={{margin: 0,  borderBottom: '1px solid lightgray', width: '100%'}}>Background</h3>
+                        <p>{this.state.background}</p>
                     </div>
                 </div>
             </div>

@@ -144,12 +144,12 @@ function Header(props) {
                     ))}
                 </div>
                 <div className={classes.settings}>
-                    <HeaderButton className={classes.setting}>
+                    {/* <HeaderButton className={classes.setting}>
                         Login
                     </HeaderButton>
                     <HeaderButton className={classes.setting}>
                         SignUp
-                    </HeaderButton>
+                    </HeaderButton> */}
                 </div>
             </div>
             <div className={classes.mbToolBar}>

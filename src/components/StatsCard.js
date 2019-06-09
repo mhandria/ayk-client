@@ -10,6 +10,14 @@ const useStyles = makeStyles(theme => ({
         background: 'lightgray',
         width: 'fit-content',
         alignItems: 'center',
+    },
+    status: {
+        padding: '10px',
+        fontWeight: 'bold',
+        fontSeize: '20px',
+        background: 'white',
+        borderRadius: '5px',
+        marginLeft: '10px'
     }
 }));
 
@@ -35,7 +43,9 @@ function StatsCard(props) {
             <Label label="Popularity" style={{padding: '10px'}}>
                 <h3 style={{margin: 0}}>{props.popularity}</h3>
             </Label>
-            <Label></Label>
+            <div className={classes.status}>
+                {(props.airing | props.publishing) ? 'On Going' : 'Complete'}
+            </div>
         </div>
     )
 }
