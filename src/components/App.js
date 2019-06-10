@@ -3,14 +3,14 @@ import { LinearProgress } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import Header from './Header';
 import { PurpleYellow } from '../assets/theme';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import MediaTopPage from './MediaTopPage';
 import MediaDetailPage from './MediaDetailPage';
 
 function App() {
   return (
     <ThemeProvider theme={PurpleYellow}>
-      <BrowserRouter basename="/">
+      <HashRouter basename="/">
         <Header />
         <Suspense fallback={<LinearProgress style={{width: '100vw'}}/>}>
           <Switch>
@@ -29,7 +29,7 @@ function App() {
               component={MediaDetailPage} />
           </Switch>
         </Suspense>
-      </BrowserRouter>  
+      </HashRouter>  
     </ThemeProvider>
   );
 }
