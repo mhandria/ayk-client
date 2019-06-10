@@ -1,15 +1,12 @@
-FROM node:10
+FROM node:11
 
-WORKDIR /src/
+WORKDIR /app
 
-COPY package.json ./
-COPY /src ./
-COPY /server.js ./
-COPY /public ./
+COPY . .
 
 RUN npm i
 
-RUN npm build
+RUN npm run build
 
 EXPOSE 8080
 
