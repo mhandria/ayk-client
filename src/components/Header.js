@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { ButtonBase } from '@material-ui/core/';
+import { ButtonBase, Menu, MenuItem } from '@material-ui/core/';
 import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -90,6 +90,7 @@ const buttonStyle = makeStyles({
 })
 
 
+
 function HeaderButton(props) {
     const classes = buttonStyle();
     const buttonClass = `${classes.button} ${props.className}`
@@ -123,6 +124,11 @@ function HeaderButton(props) {
 const navOptions = ['Anime', 'Manga']
 
 function Header(props) { 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    
+    const handleClick = (event) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null);
+
     const classes = useStyles();
     return(
         <div className={classes.root}>
@@ -155,7 +161,30 @@ function Header(props) {
             <div className={classes.mbToolBar}>
                 <div style={{flex: 1}}></div>
                 <h1 className={classes.mbLogo}>AnimeYouKnow</h1>
-                <i className={`${classes.menuIcon} fas fa-ellipsis-v`}></i>
+                <i 
+                    aria-controls="main-menu"
+                    aria-haspopup="true"
+                    onClick={handleClick}
+                    className={`${classes.menuIcon} fas fa-ellipsis-v`}></i>
+                <Menu
+                    id="main-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}>
+                        <MenuItem>
+                            <NavLink
+                                onClick={handleClose} 
+                                style={{textDecoration: 'none', color: 'black'}} 
+                                to="/anime">Anime</NavLink>
+                        </MenuItem>
+                        <MenuItem>
+                            <NavLink
+                                onClick={handleClose} 
+                                style={{textDecoration: 'none', color: 'black'}}
+                                to="/manga">Manga</NavLink>
+                        </MenuItem>
+                </Menu>
             </div>
         </div>
     );
