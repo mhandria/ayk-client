@@ -74,6 +74,11 @@ const useStyles = makeStyles(theme => ({
         flex: 1,
         justifyContent: 'flex-end',
         cursor: 'pointer',
+    },
+    menuList: {
+        top: '10px !important',
+        right: '10px',
+        left: 'auto !important',
     }
 }));
 
@@ -160,30 +165,36 @@ function Header(props) {
             </div>
             <div className={classes.mbToolBar}>
                 <div style={{flex: 1}}></div>
-                <h1 className={classes.mbLogo}>AnimeYouKnow</h1>
+                <NavLink 
+                    to="/anime"
+                    className={classes.mbLogo}
+                    style={{textDecoration: 'none', color: 'black'}}>
+                    <h1>AnimeYouKnow</h1>
+                </NavLink> 
                 <i 
                     aria-controls="main-menu"
                     aria-haspopup="true"
                     onClick={handleClick}
+                    style={{cursor: 'pointer'}}
                     className={`${classes.menuIcon} fas fa-ellipsis-v`}></i>
                 <Menu
                     id="main-menu"
                     anchorEl={anchorEl}
                     keepMounted
+                    classes={{
+                        paper: classes.menuList,
+                        // list: classes.menuList,
+                    }}
                     open={Boolean(anchorEl)}
                     onClose={handleClose}>
-                        <MenuItem>
-                            <NavLink
-                                onClick={handleClose} 
-                                style={{textDecoration: 'none', color: 'black'}} 
-                                to="/anime">Anime</NavLink>
-                        </MenuItem>
-                        <MenuItem>
-                            <NavLink
-                                onClick={handleClose} 
-                                style={{textDecoration: 'none', color: 'black'}}
-                                to="/manga">Manga</NavLink>
-                        </MenuItem>
+                        {navOptions.map(value => (
+                                <MenuItem>
+                                    <NavLink
+                                        onClick={handleClose} 
+                                        style={{textDecoration: 'none', color: 'black'}}
+                                        to={`/${value}`}>{value}</NavLink>
+                                </MenuItem>
+                        ))}
                 </Menu>
             </div>
         </div>

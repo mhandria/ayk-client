@@ -13,7 +13,10 @@ const useStyles = theme => ({
         flexDirection: 'column',
         margin: theme.spacing(3),
         padding: theme.spacing(1),
-        flex: '1 1 15%'
+        flex: '1 0 20%',
+        [theme.breakpoints.down('sm')]: {
+            margin: 0
+        }
     },
     posterContainer: {
         textDecoration: 'none', 
